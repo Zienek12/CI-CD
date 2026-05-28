@@ -57,3 +57,31 @@ def test_multiply(a, b, expected):
 def test_divide(a, b, expected):
     result = utils.divide(a, b)
     assert result == expected
+
+
+# TDD: tests for conversion of natural numbers (0..100) to binary
+@pytest.mark.parametrize(
+    "n, expected",
+    [
+        (0, "0"),
+        (1, "1"),
+        (2, "10"),
+        (5, "101"),
+        (100, "1100100"),
+    ],
+)
+def test_convert_to_binary_correct(n, expected):
+    result = utils.convert_to_binary(n)
+    assert result == expected
+
+
+@pytest.mark.parametrize("n", [-1, 101, 1000])
+def test_convert_to_binary_out_of_range(n):
+    with pytest.raises(ValueError):
+        utils.convert_to_binary(n)
+
+
+@pytest.mark.parametrize("n", [1.5, 2.0, "3", None])
+def test_convert_to_binary_invalid_type(n):
+    with pytest.raises(TypeError):
+        utils.convert_to_binary(n)
